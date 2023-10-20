@@ -38,6 +38,7 @@ const messageInnerHTML = (data) => {
     }
     return message
 }
+
 const chatMessage = document.querySelector('.chatMessage')
 
 
@@ -47,8 +48,12 @@ socket.on('userConnection', (data) => {
     console.log(data)
     chatMessage.innerHTML = connection;
 })
+
+
 const inputMessage = document.getElementById('inputMessage')
 const sendMessage = document.getElementById('sendMessage')
+
+
 
 sendMessage.addEventListener('click', (e) => {
     e.preventDefault();
@@ -66,3 +71,4 @@ socket.on("userMessage", (data) => {
     chatMessage.innerHTML = message;
 
 })
+

@@ -57,7 +57,7 @@ io.on('connection', socket => {
     })
     //msg enviado
     socket.on('userMessage', (data) => {
-        
+
         message.push({
             id: socket.id,
             info: 'message',
@@ -68,5 +68,16 @@ io.on('connection', socket => {
         io.sockets.emit('userMessage', message)
 
     })
+    //desconexión
+    socket.on('disconnect', () => {
+        message.push({
+            info: 'disconect',
+            name: userName,
+            message: ` <p>${userName} se desconecto del chat</p>`,
+            date: new Date().toTimeString()
+        })
+        io.sockets.emit('userDisconnected', message)
+    })
 
 })
+
