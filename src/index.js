@@ -42,7 +42,7 @@ const message = []
 
 io.on('connection', socket => {
     console.log(`User ${socket.id} Connection`)
-    let userName = ''
+    let userName = ""
     //Anuncio de conección
     socket.on('userConnection', (data) => {
         userName = data.user

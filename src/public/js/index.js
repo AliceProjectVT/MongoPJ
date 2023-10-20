@@ -17,15 +17,13 @@ Swal.fire({
     userName.textContent = result.value
     socket.emit("userConnection", {
         user: result.value
-
     })
-
 })
 const messageInnerHTML = (data) => {
-    let message = " ";
+    let message = "";
     for (let i = 0; i < data.length; i++) {
         if (data[i].info === 'connection') {
-            message += `<p class="connection" >${data[0].message}</p>`
+            message += `<p class="connection" >${data[i].message}</p>`
         } if (data[i].info === 'message') {
             message += `
             <div class="messaeUser" >
@@ -45,7 +43,6 @@ const chatMessage = document.querySelector('.chatMessage')
 socket.on('userConnection', (data) => {
     chatMessage.innerHTML = "";
     const connection = messageInnerHTML(data)
-    console.log(data)
     chatMessage.innerHTML = connection;
 })
 
@@ -57,16 +54,13 @@ const sendMessage = document.getElementById('sendMessage')
 
 sendMessage.addEventListener('click', (e) => {
     e.preventDefault();
-       socket.emit("userMessage", {
+    socket.emit("userMessage", {
         message: inputMessage.value
     })
-
 })
-
 
 socket.on("userMessage", (data) => {
     chatMessage.innerHTML = ""
-
     const message = messageInnerHTML(data)
     chatMessage.innerHTML = message;
 
