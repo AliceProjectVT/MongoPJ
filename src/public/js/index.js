@@ -1,9 +1,7 @@
-
-
 const socket = io()
-
-
 const userName = document.querySelector('.userName')
+let nameUser = ""
+
 Swal.fire({
     title: 'Ingresa tu Nick',
     input: 'text',
@@ -15,6 +13,7 @@ Swal.fire({
 
 }).then((result) => {
     userName.textContent = result.value
+    nameUser = result.value
     socket.emit("userConnection", {
         user: result.value
     })
@@ -54,9 +53,13 @@ const sendMessage = document.getElementById('sendMessage')
 
 sendMessage.addEventListener('click', (e) => {
     e.preventDefault();
-    socket.emit("userMessage", {
-        message: inputMessage.value
-    })
+    const message = inputMessage.value.trim(); 
+    if (message.length > 0) { 
+        socket.emit("userMessage", {
+            message: message
+        });
+        inputMessage.value = ''; 
+    }
 })
 
 socket.on("userMessage", (data) => {
@@ -65,4 +68,33 @@ socket.on("userMessage", (data) => {
     chatMessage.innerHTML = message;
 
 })
+
+
+
+
+inputMessage.addEventListener("keypress", () => {
+    socket.emit("typing", { nameUser })
+
+
+})
+
+let typingTimer;
+const typingInterval = 1000;
+
+
+const typing = document.querySelector(".typing")
+socket.on('typing', data => {
+    typing.textContent = `${data.nameUser} está escribiendo...`;
+    clearTimeout(typingTimer);
+
+    typingTimer = setTimeout(() => {
+        typing.textContent = '';
+    }, typingInterval);
+
+})
+
+
+//popup
+
+
 
