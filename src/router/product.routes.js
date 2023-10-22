@@ -1,38 +1,49 @@
 import { Router } from "express";
-import ProductManager from "../controllers/ProductManager.js";
+import productsManagerMongo from "../Daos/Mongo/productManager.js";
 
-const product = new ProductManager();
-
-
-const ProductRouter = Router()
-
-ProductRouter.post("/", async (req, res) => {
-    let newProduct = req.body
-    res.send(await product.addProducts(newProduct))
+const productManager = new productsManagerMongo();
 
 
-})
-ProductRouter.get("/", async (req, res) => {
-    res.send(await product.getProducts())
-})
-ProductRouter.get("/:id", async (req, res) => {
-    let id = req.params.id
-    res.send(await product.getProductsByID(id))
+const router = Router()
 
-})
+router.post("/", async (req, res) => {
+    try {
+        const newProduct = req.body
 
-ProductRouter.delete("/:id", async (req, res) => {
-    let id = req.params.id
-    res.send(await product.deleteProducts(id))
+        let result = await productManager.createProduct(newProduct)
+        res.send({
+            status: 'success',
+            payload: result
+        })
+    } catch (error) {
+        console.log(error)
+    }
 
 })
 
-ProductRouter.put("/:id", async (req, res) => {
-    let id = req.params.id
+router.get("/", async (req, res) => {
+    res.send(await productManager.getProducts())
+})
+
+router.get("/:_id", async (req, res) => {
+    let id = req.params._id
+    res.send(await productManager.getProductByID(id))
+
+})
+
+router.delete("/:_id", async (req, res) => {
+    let id = req.params._id
+    res.send(await productManager.deleteProduct(id))
+
+})
+
+router.put("/:_id", async (req, res) => {
+    let id = req.params._id
     let updateProduct = req.body
-    res.send(await product.updateProducts(id, updateProduct))
+    res.send(await productManager.updateProduct(id, updateProduct))
 
 
 })
 
-export default ProductRouter
+export default router
+
