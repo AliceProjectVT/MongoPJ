@@ -78,3 +78,4 @@ class ProductManager {
 
 
 export default ProductManager
+///ESTE ARCHIVO DEBE ELIMINARSE.
