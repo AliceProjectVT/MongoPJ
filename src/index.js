@@ -1,12 +1,11 @@
 import express from "express";
-import { engine} from "express-handlebars";
+import { engine } from "express-handlebars";
 import * as path from "path"
 import __dirname from "./utils.js";
-import ProductManager from "./controllers/ProductManager.js";
 import { Server } from "socket.io";
 import router from "./router/index.js";
 import conectDB from "./config/config.js"
-
+import cookieParser from "cookie-parser";
 
 conectDB()
 const app = express()
@@ -18,34 +17,19 @@ const httpServer = app.listen(PORT, () => {
 })
 const io = new Server(httpServer);
 
-const product = new ProductManager();
+
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-
 app.use(router)
-
 //HB
 app.engine("handlebars", engine())
-
-
 app.set("view engine", "handlebars")
 app.set("views", path.resolve(__dirname + "/views"))
-
-
 
 //static
 
 app.use("/", express.static(__dirname + "/public"))
-
-app.get("/", async (req, res) => {
-    let allProducts = await product.getProducts()
-    res.render("home", {
-        title: "Express Avanzado // Handlebars",
-        products: allProducts
-    })
-
-})
 
 
 
@@ -82,16 +66,8 @@ io.on('connection', socket => {
         io.sockets.emit('userMessage', message)
 
     })
-    //desconexión
-    socket.on('disconnect', () => {
-        message.push({
-            info: 'disconect',
-            name: userName,
-            message: ` <p>${userName} se desconecto del chat</p>`,
-            date: new Date().toTimeString()
-        })
-        io.sockets.emit('userDisconnected', message)
-    })
+
+
     //Escribiendo....
     socket.on('typing', data => {
         socket.broadcast.emit('typing', data);

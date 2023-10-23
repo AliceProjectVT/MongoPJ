@@ -5,6 +5,12 @@ class productsManagerMongo {
         this.model = productsModel
     }
 
+    async getProductBy(){
+
+
+    }
+
+
 
     async getProducts() {
         try {
@@ -17,8 +23,8 @@ class productsManagerMongo {
     async getProductByID(pid) {
         return await this.model.findOne({ _id: pid })
     }
-    async createProduct(newUser) {
-        return await this.model.create(newUser)
+    async createProduct(newProduct) {
+        return await this.model.create(newProduct)
 
     }
     async updateProduct(pid, newData) {
@@ -27,15 +33,10 @@ class productsManagerMongo {
         return updatedProduct;
 
     }
-
-
-
     
     async deleteProduct(pid){
-
     const deletedProduct = await this.model.findByIdAndDelete({ _id: pid });
     return deletedProduct;
-
 }
 }
 

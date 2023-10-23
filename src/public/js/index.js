@@ -53,12 +53,12 @@ const sendMessage = document.getElementById('sendMessage')
 
 sendMessage.addEventListener('click', (e) => {
     e.preventDefault();
-    const message = inputMessage.value.trim(); 
-    if (message.length > 0) { 
+    const message = inputMessage.value.trim();
+    if (message.length > 0) {
         socket.emit("userMessage", {
             message: message
         });
-        inputMessage.value = ''; 
+        inputMessage.value = '';
     }
 })
 
@@ -92,9 +92,3 @@ socket.on('typing', data => {
     }, typingInterval);
 
 })
-
-
-//popup
-
-
-

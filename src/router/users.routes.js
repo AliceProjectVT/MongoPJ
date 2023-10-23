@@ -1,5 +1,6 @@
 import { Router } from "express";
 import userManagerMongo from "../Daos/Mongo/userManager.js";
+import auth from "../midleware/authentications.js";
 
 
 
@@ -9,7 +10,7 @@ const router = Router()
 let userService = new userManagerMongo()
 
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         let users = await userService.getUsers()
         res.send({
@@ -21,21 +22,6 @@ router.get("/", async (req, res) => {
     }
 })
 
-
-router.post("/", async (req, res) => {
-
-    try {
-        const newUser = req.body
-
-        let result = await userService.createUser(newUser)
-        res.send({
-            status: 'success',
-            payload: result
-        })
-    } catch (error) {
-        console.log(error)
-    }
-})
 
 
 

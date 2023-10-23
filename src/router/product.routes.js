@@ -1,6 +1,7 @@
 import { Router } from "express";
 import productsManagerMongo from "../Daos/Mongo/productManager.js";
 
+
 const productManager = new productsManagerMongo();
 
 
@@ -8,6 +9,7 @@ const router = Router()
 
 router.post("/", async (req, res) => {
     try {
+        
         const newProduct = req.body
 
         let result = await productManager.createProduct(newProduct)
@@ -22,6 +24,7 @@ router.post("/", async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
+    const {limit= 1, page= 1}= req.query
     res.send(await productManager.getProducts())
 })
 
@@ -44,6 +47,7 @@ router.put("/:_id", async (req, res) => {
 
 
 })
+
 
 export default router
 
