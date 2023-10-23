@@ -10,7 +10,7 @@ import session from "express-session";
 import chatRouter from "./chat.routes.js"
 import MongoStore from "connect-mongo";
 import sessionRouter from "./session.router.js"
-
+import userProfile from "./profile.routes.js"
 const router = Router()
 let userService = new userManagerMongo()
 
@@ -39,6 +39,7 @@ router.use('/home', usersRouter)
 router.use('/', cookiesRouter)
 router.use('/chat', chatRouter)
 router.use('/session', sessionRouter)
+router.use('/init', userProfile)
 
 
 

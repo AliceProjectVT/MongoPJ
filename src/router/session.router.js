@@ -9,6 +9,8 @@ const router = Router()
 
 
 router.post('/login', async (req, res) => {
+
+    
     const { email, password } = req.body
     const user = await userModel.findOne({ email, password })
     console.log('user')
@@ -17,20 +19,20 @@ router.post('/login', async (req, res) => {
         name: `${user.first_name}`,
         email: user.email
     }
-    res.status(200).send({
-        status: 'succes',
-        payload: req.session.user,
-        message: 'logeado'
-    })
-
+    res.redirect('/init/profile')
 
 })
 
 
 
 router.post('/logout', (req, res) => {
-    res.send('Haz cerrado sesion ')
+    req.session.destroy(err => {
+        if (err) res.send({ status: 'logout error', error: err })
+        res.send('Haz cerrado sesion ')
+    })
 })
+
+
 
 router.post("/register", async (req, res) => {
     try {
@@ -40,10 +42,7 @@ router.post("/register", async (req, res) => {
         if (exist) return res.status(401).send({ status: 'error', error: 'El correo se encuentra en uso.' })
         const newUser = { first_name, last_name, email, password }
         let result = await userService.createUser(newUser)
-        res.send({
-            status: 'success',
-            message: 'creado'
-        });
+        res.redirect('/login')
         console.log("se ha añadido un nuevo usuario");
 
 

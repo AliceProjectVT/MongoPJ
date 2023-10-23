@@ -31,11 +31,11 @@ router.get('/session', (req, res) => {
 })
 router.post('/login', (req, res) => {
     const { email, password } = req.body
-    if(email != 'd@i.com'  ||  password != '123456'){
+    if (email != 'd@i.com' || password != '123456') {
         return res.send('login fallido')
     }
     req.session.user = email
-    req.session.admin=true
+    req.session.admin = true
     res.send
     return res.send('Exito al logear')
 
