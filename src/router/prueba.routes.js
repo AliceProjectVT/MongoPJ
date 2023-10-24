@@ -43,10 +43,12 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
-        if (err) res.send({ status: 'logout error', error: err })
-        res.send('logout exitoso')
-    })
-})
+        if (err) return res.send({ status: 'logout error', error: err });
+       
+        res.redirect('/')
+    });
+});
+
 
 
 

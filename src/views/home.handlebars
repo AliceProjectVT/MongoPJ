@@ -1,11 +1,7 @@
 
-
-
 <p>Home Page.</p>
-
-{{!-- {{#each products}}
-<h2>{{ this.nombre}}</h2>
-<p>{{this.apellido}}</p>
-{{/each}}
-  --}}
-    
+{{#if isLoggedIn}}
+    <p>Bienvenido, has iniciado sesión.</p>
+{{else}}
+    <p>Inicia sesión para ver el contenido.</p>
+{{/if}}

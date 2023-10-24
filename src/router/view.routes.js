@@ -14,12 +14,14 @@ router.get('/register', (req, res) => {
     res.render('register')
 });
 router.get("/", async (req, res) => {
-    // const userName = req.session.userName
-    res.render('home')
+
+    res.render('home', { isLoggedIn: req.session.user ? true : false });
+
+
 
 })
 router.get("/login", async (req, res) => {
-    
+
     res.render('login')
 
 })

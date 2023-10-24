@@ -1,7 +1,6 @@
 import { Router } from "express";
 
 const router = Router();
-
 router.get('/profile', async (req, res) => {
     const userName = req.session.user ? req.session.user.name : null;
 
@@ -11,5 +10,6 @@ router.get('/profile', async (req, res) => {
 
     res.render('profile', { userName });
 });
+
 
 export default router;

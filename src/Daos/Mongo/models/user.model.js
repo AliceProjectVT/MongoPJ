@@ -1,4 +1,6 @@
 import { Schema, model, mongoose } from "mongoose"
+import bcrypt from "bcrypt"
+const saltRound = 10;
 
 
 
@@ -39,6 +41,7 @@ userSchema.pre('save', async function (next) {
     }
 
 })
+
 
 const userModel = model(collection, userSchema)
 
