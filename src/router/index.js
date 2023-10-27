@@ -9,7 +9,7 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import chatRouter from "./chat.routes.js"
 import MongoStore from "connect-mongo";
-import sessionRouter from "./session.router.js"
+import sessionRouter from "./sessions.router.js"
 import userProfile from "./profile.routes.js"
 const router = Router()
 let userService = new userManagerMongo()
@@ -38,7 +38,7 @@ router.use('/api/users', usersRouter)
 router.use('/home', usersRouter)
 router.use('/', cookiesRouter)
 router.use('/chat', chatRouter)
-router.use('/session', sessionRouter)
+router.use('/api/sessions', sessionRouter)
 router.use('/init', userProfile)
 
 

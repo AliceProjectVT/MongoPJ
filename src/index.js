@@ -6,6 +6,11 @@ import { Server } from "socket.io";
 import router from "./router/index.js";
 import conectDB from "./config/config.js"
 import cookieParser from "cookie-parser";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
+
+initializePassport()
+
 
 conectDB()
 const app = express()
@@ -18,6 +23,7 @@ const httpServer = app.listen(PORT, () => {
 const io = new Server(httpServer);
 
 
+app.use(passport.initialize())
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
