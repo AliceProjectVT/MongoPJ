@@ -7,7 +7,7 @@ const initializePassport = () => {
 passport.use('github', new GithubStrategy({
     clientID:'Iv1.53504297a2288e65',
     clientSecret: '4f3ab9c7741a5ae2eb340c6776744a6af8f25e56',
-    callbackURL:'https://localhost/api/sessions/githubcallback'
+    callbackURL:'http://localhost/api/sessions/githubcallback'
 }, async (accesToken, refreshToken, profile, done)=>{
 try{
     let user= await userService.getUser({email: profile._json.email})

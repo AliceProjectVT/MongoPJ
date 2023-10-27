@@ -11,6 +11,10 @@ import chatRouter from "./chat.routes.js"
 import MongoStore from "connect-mongo";
 import sessionRouter from "./sessions.router.js"
 import userProfile from "./profile.routes.js"
+
+import initializePassport from "../config/passport.config.js";
+
+
 const router = Router()
 let userService = new userManagerMongo()
 
@@ -41,6 +45,7 @@ router.use('/chat', chatRouter)
 router.use('/api/sessions', sessionRouter)
 router.use('/init', userProfile)
 
+initializePassport()
 
 
 export default router

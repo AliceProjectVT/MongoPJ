@@ -7,9 +7,6 @@ import router from "./router/index.js";
 import conectDB from "./config/config.js"
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import initializePassport from "./config/passport.config.js";
-
-initializePassport()
 
 
 conectDB()
