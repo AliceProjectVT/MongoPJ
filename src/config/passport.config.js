@@ -1,9 +1,42 @@
 import passport from "passport"
 import GithubStrategy from "passport-github2"
+import jwt from 'passport-jwt'
 import userManagerMongo from "../Daos/Mongo/userManager.js"
 
 const userService = new userManagerMongo
+const JWTStrategy = jwt.Strategy
+const ExtractJWT = jwt.ExtractJwt
+
 const initializePassport = () => {
+
+
+    let cookieExtractor = req => {
+        let token = null
+        if (req && req.cookies) {
+
+            token = req.cookies(cookieToken)
+        }
+        return token
+    }
+
+
+
+    const objectStrategyJwt = {
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: 'aquivaunafirma'
+    }
+    passport.use('jwt', new JWTStrategy(objectStrategyJwt, async (jwt_payload, done) => {
+
+        try {
+
+            return done(null, jwt_payload)
+        } catch (error) {
+            return done(error)
+
+
+        }
+
+    }))
     passport.use('github', new GithubStrategy({
         clientID: 'Iv1.53504297a2288e65',
         clientSecret: '4f3ab9c7741a5ae2eb340c6776744a6af8f25e56',

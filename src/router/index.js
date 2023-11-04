@@ -9,10 +9,11 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import chatRouter from "./chat.routes.js"
 import MongoStore from "connect-mongo";
-import sessionRouter from "./sessions.router.js"
+import sessionRouter from "./sessions.routes.js"
 import userProfile from "./profile.routes.js"
 
 import initializePassport from "../config/passport.config.js";
+import passport from "passport";
 
 
 const router = Router()
@@ -46,6 +47,7 @@ router.use('/api/sessions', sessionRouter)
 router.use('/init', userProfile)
 
 initializePassport()
+router.use(passport.initialize())
 
 
 export default router

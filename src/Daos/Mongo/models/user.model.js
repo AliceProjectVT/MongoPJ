@@ -1,4 +1,5 @@
 import { Schema, model, mongoose } from "mongoose"
+import mongoosePaginate from "mongoose-paginate-v2"
 import bcrypt from "bcrypt"
 const saltRound = 10;
 
@@ -28,20 +29,20 @@ const userSchema = new Schema({
 
 
 })
-userSchema.pre('save', async function (next) {
-    try {
-        const emailExist = await mongoose.model('users').findOne({ email: this.email })
-        if (emailExist) {
-            throw new Error('El Correo ya se encuentra en uso.')
-        }
-        next()
+// userSchema.pre('save', async function (next) {
+//     try {
+//         const emailExist = await mongoose.model('users').findOne({ email: this.email })
+//         if (emailExist) {
+//             throw new Error('El Correo ya se encuentra en uso.')
+//         }
+//         next()
 
-    } catch (error) {
-        next(error)
-    }
+//     } catch (error) {
+//         next(error)
+//     }
 
-})
-
+// })
+userSchema.plugin(mongoosePaginate)
 
 const userModel = model(collection, userSchema)
 
