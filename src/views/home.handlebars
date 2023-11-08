@@ -1,7 +1,6 @@
-
 <p>Home Page.</p>
-{{#if isLoggedIn }}
-    <p>Bienvenido {{userName}}, has iniciado sesión.</p>
+{{#unless user.role}}
+    <p>Bienvenido {{user.userName}}, no tienes un rol asignado.</p>
 {{else}}
-    <p>Inicia sesión para ver el contenido.</p>
-{{/if}}
+    <p>Bienvenido {{user.userName}}, eres un {{user.role}}.</p>
+{{/unless}}

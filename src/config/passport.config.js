@@ -1,16 +1,18 @@
 import passport from "passport"
 import GithubStrategy from "passport-github2"
 import jwt from 'passport-jwt'
+// utilizamos el userManagerMongo, para acceder a la Base de datos
 import userManagerMongo from "../Daos/Mongo/userManager.js"
 
-const userService = new userManagerMongo
-const JWTStrategy = jwt.Strategy
+const userService = new userManagerMongo() 
+const JWTStrategy = jwt.Strategy//tomar data de las cookies 
 const ExtractJWT = jwt.ExtractJwt
 
+
+
+//Manejar configuracion de las estrategias
 const initializePassport = () => {
-
-
-    let cookieExtractor = req => {
+    let cookieExtractor = req => { //extraer cookies  de req
         let token = null
         if (req && req.cookies) {
 
@@ -25,6 +27,9 @@ const initializePassport = () => {
         jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
         secretOrKey: 'aquivaunafirma'
     }
+
+
+    //passport.use es el middleware
     passport.use('jwt', new JWTStrategy(objectStrategyJwt, async (jwt_payload, done) => {
 
         try {
@@ -37,6 +42,8 @@ const initializePassport = () => {
         }
 
     }))
+
+
     passport.use('github', new GithubStrategy({
         clientID: 'Iv1.53504297a2288e65',
         clientSecret: '4f3ab9c7741a5ae2eb340c6776744a6af8f25e56',

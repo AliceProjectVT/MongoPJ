@@ -1,6 +1,6 @@
 import { Router } from "express";
 import userManagerMongo from "../Daos/Mongo/userManager.js";
-import auth from "../midleware/authentications.js";
+import auth from "../middleware/authentications.js";
 
 
 

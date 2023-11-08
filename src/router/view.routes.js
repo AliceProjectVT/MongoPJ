@@ -13,12 +13,10 @@ router.get('/subirArch', (req, res) => {
 router.get('/register', (req, res) => {
     res.render('register')
 });
+
 router.get("/", async (req, res) => {
 
-
     res.render('home', { isLoggedIn: req.session.user ? true : false });
-
-
 
 })
 router.get("/login", async (req, res) => {

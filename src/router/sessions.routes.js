@@ -3,7 +3,7 @@ import userModel from "../Daos/Mongo/models/user.model.js";
 import userManagerMongo from "../Daos/Mongo/userManager.js";
 import { createHash, isCorrectPassword } from "../utils/hash.js"
 import passport from "passport";
-
+import { generateToken, authToken } from "../utils/jsonwebtoken.js"
 
 
 let userService = new userManagerMongo()
@@ -27,14 +27,30 @@ router.post('/login', async (req, res) => {
         return res.status(401).send({ status: 'error', error: 'Password incorrecto' });
     }
 
+    const token = generateToken({
+        first_name: user.first_name,
+        last_name: user.last_name,
+        email: user.email,
+        role: 'admin'
+    });
+
+    res.cookie('cookieToken', token, {
+        maxAge: 60 * 60 * 1000,
+        httpOnly: true
+    });
+
     req.session.user = {
         name: `${user.first_name}`,
         email: user.email
     };
 
-    res.redirect('/init/profile')
+    res.status(200).send({
+        status: 'success',
+        token: token,
+        message: "Bienvenido",
+    });
 });
-    
+
 
 
 
@@ -53,7 +69,12 @@ router.post("/register", async (req, res) => {
 
         const exist = await userModel.findOne({ email })
         if (exist) return res.status(401).send({ status: 'error', error: 'El correo se encuentra en uso.' })
-        const newUser = { first_name, last_name, email, password: createHash(password) }
+        const newUser = {
+            first_name,
+            last_name,
+            email,
+            password: createHash(password)
+        }
         let result = await userService.createUser(newUser)
         res.redirect('/login')
         console.log("se ha añadido un nuevo usuario");
@@ -68,10 +89,10 @@ router.post("/register", async (req, res) => {
 
 //sessions gihub
 
-router.get('/github', passport.authenticate('github', {scope:['user:email']}), async(req,res)=>{
+router.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
 
 })
-router.get('/githubcallback', passport.authenticate('github', {failureRedirect:'/login'}),async(req,res)=>{
+router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), async (req, res) => {
     req.session.user = req.user
     res.redirect('/')
 })

@@ -1,16 +1,21 @@
  
  
  <h2>LOGIN</h2>
-<form action="api/sessions/login" method="POST">
+<form id="registerForm">
 
 <div class="section">
 
     <div class="title" > Correo</div>
-    <div class="field" ><input type="email" name="email" id="username" placeholder="Ingresar correo"required></div>
+    <div class="field" >
+        <input type="email" name="email" id="username" placeholder="Ingresar correo"required>
+    </div>
 </div>
 <div class="section">
     <div class="title" >Contraseña</div>
-    <div class="field" ><input type="password" name="password" id="password" placeholder="Ingresar Contraseña" required></div>
+    <div class="field" >
+        <input type="password" name="password" id="password" placeholder="Ingresar Contraseña" required>
+        
+        </div>
 </div>
 <div class="section" >
     <div class="button"><input type="submit" value="Login"></div>
@@ -21,3 +26,32 @@
 <button class="" >Github</button>
 </a>
 
+
+
+<script>
+  const form = document.querySelector('#registerForm')
+form.addEventListener('submit', event => {
+    event.preventDefault()
+    const formData = new FormData(form)
+    const data = Object.fromEntries(formData)
+    console.log(data) 
+    fetch('api/sessions/login', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json",
+            
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log(data)
+            window.location.href = '/'
+        }
+    })
+    .catch(error => {
+        console.log(error.message)
+    })
+})
+</script>
