@@ -1,5 +1,17 @@
-{{#each users as user }}
-<li>{{user.first_name}}</li>
-<li>{{user.email}}</li>
-    
+{{#each users}}
+    <li><strong>Nombre: </strong> {{this.first_name}} - {{this.email
+    }} </li>
 {{/each}}
+
+<section>
+    {{#if hasPrevPage}}
+    <a href="/users?numPage= {{prevPage}}"><button>Anterior</button></a>
+      {{/if}}
+      
+ <label for=""> {{page}} </label>
+
+      {{#if hasNextPage}}
+      <a href="/users?numPage= {{nextPage}}  "><button>Siguiente</button></a>
+        
+      {{/if}}
+</section>

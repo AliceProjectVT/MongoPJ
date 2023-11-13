@@ -7,7 +7,7 @@ const saltRound = 10;
 
 
 
-const collection = 'users'
+const usercollection = 'users'
 
 
 
@@ -28,6 +28,7 @@ const userSchema = new Schema({
     password: String,
     role: {
         type: String,
+        enum: ['user', 'user_premium', 'admin'],
         default: 'user'
     }
 
@@ -47,6 +48,6 @@ const userSchema = new Schema({
 // })
 userSchema.plugin(mongoosePaginate)
 
-const userModel = model(collection, userSchema)
+const userModel = model(usercollection, userSchema)
 
 export default userModel

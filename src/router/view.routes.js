@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { uploader } from "../utils/multer.js";
 import ProductManager from "../controllers/ProductManager.js";
+import passportCall from "../middleware/passportCall.middleware.js"
+import authorization from "../middleware/authorization.middleware.js";
+import userModel from "../Daos/Mongo/models/user.model.js";
 
 const product = new ProductManager();
 
@@ -24,23 +27,34 @@ router.get("/login", async (req, res) => {
     res.render('login')
 
 })
-router.get("/users", async (req, res) => {
+router.get("/users", [
+    passportCall('jwt'),
+    authorization(['ADMIN'])
+], async (req, res) => {
     try {
-       
-        const { numPage = 1, limit = 20, query = '' } = req.query
-
-        let user = await userModel.paginate({}, { limit: limit, page: numPage, lean:true })
-        console.log(user)
-        res.status(200).render('users',{
-            showNav:true,
-            users:docs,
-            hasPrevPage,
+        //paginate
+        const { numPage = 1, limit = 1, query = '' } = req.query
+        let { docs,
             hasNextPage,
-            nettPage,
+            hasPrevPage,
+            nextPage,
             prevPage,
             page
-            })
-    } catch {
+        } = await userModel.paginate({}, { limit: limit, page: numPage, lean: true })
+        //en el primer param de Paginate, pueden filtrar
+        // console.log(users)
+        res.status(200).render('users', {
+            showNav: true,
+            users: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            page
+
+        })
+    } catch (error) {
+        console.log(error)
 
     }
 

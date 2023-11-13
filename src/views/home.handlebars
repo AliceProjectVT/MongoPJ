@@ -1,6 +1,6 @@
 <p>Home Page.</p>
-{{#unless user.role}}
-    <p>Bienvenido {{user.userName}}, no tienes un rol asignado.</p>
+{{#if username}}
+  <p>Hola, {{username}}. Bienvenido de nuevo.</p>
 {{else}}
-    <p>Bienvenido {{user.userName}}, eres un {{user.role}}.</p>
-{{/unless}}
+  <p>Bienvenido a nuestra aplicación. Por favor, inicia sesión.</p>
+{{/if}}

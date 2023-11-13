@@ -16,8 +16,13 @@ import initializePassport from "../config/passport.config.js";
 import passport from "passport";
 
 
+initializePassport()
+
 const router = Router()
 let userService = new userManagerMongo()
+
+
+router.use(passport.initialize())
 
 router.use(cookieParser('F1RM4S3GUR4'))
 router.use(session({
@@ -45,9 +50,6 @@ router.use('/', cookiesRouter)
 router.use('/chat', chatRouter)
 router.use('/api/sessions', sessionRouter)
 router.use('/init', userProfile)
-
-initializePassport()
-router.use(passport.initialize())
 
 
 export default router

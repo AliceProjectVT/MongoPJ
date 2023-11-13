@@ -31,11 +31,11 @@ router.post('/login', async (req, res) => {
         first_name: user.first_name,
         last_name: user.last_name,
         email: user.email,
-        role: 'admin'
+        role: user.role
     });
 
-    res.cookie('cookieToken', token, {
-        maxAge: 60 * 60 * 1000,
+    res.cookie('auth_token', token, {
+        maxAge: 60 * 60 * 10000,
         httpOnly: true
     });
 
