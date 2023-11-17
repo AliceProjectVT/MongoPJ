@@ -44,6 +44,52 @@ const initializePassport = () => {
 }
 
 
+const initPassportGit = () => {
+    passport.serializeUser((user, done) => {
+        done(null, user._id);
+    });
+    passport.deserializeUser(async (id, done) => {
+        let user = await githubService.findById(id);
+        done(null, user);
+    });
+
+    passport.use(
+        "github",
+        new GithubStrategy(
+            {
+                clientID: 'Iv1.53504297a2288e65',
+                clientSecret: '4f3ab9c7741a5ae2eb340c6776744a6af8f25e56',
+                callbackURL: 'http://localhost:4000/api/sessions/githubcallback'
+            },
+
+            async (accessToken, refreshToken, profile, done) => {
+                try {
+                    let email = profile._json.email || `GitHubUser-${profile._json.login}`;
+                    let user = await userService.getUser({ email });
+
+                    if (!user) {
+                        // El usuario no existe, crear uno nuevo
+                        let newUser = {
+                            first_name: profile._json.name || "",
+                            last_name: "GH",
+                            email,
+                            password: "",
+                        };
+
+                        user = await userService.createUser(newUser);
+                    }
+
+                    return done(null, user);
+                } catch (error) {
+                    return done(error);
+                }
+            }
+        )
+    );
+}
+
+
+
 
 // const initializePassport = () => {
 //     const cookieExtractor = req => { //extraer cookies  de req
@@ -77,9 +123,7 @@ const initializePassport = () => {
 
 
 //     passport.use('github', new GithubStrategy({
-//         clientID: 'Iv1.53504297a2288e65',
-//         clientSecret: '4f3ab9c7741a5ae2eb340c6776744a6af8f25e56',
-//         callbackURL: 'http://localhost:4000/api/sessions/githubcallback'
+//         
 //     }, async (accesToken, refreshToken, profile, done) => {
 //         console.log('profile:', profile)
 //         try {
@@ -105,4 +149,4 @@ const initializePassport = () => {
 //     
 
 // }
-export default initializePassport
+export { initializePassport, initPassportGit }

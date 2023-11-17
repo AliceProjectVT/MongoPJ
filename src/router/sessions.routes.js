@@ -4,6 +4,7 @@ import userManagerMongo from "../Daos/Mongo/userManager.js";
 import { createHash, isCorrectPassword } from "../utils/hash.js"
 import passport from "passport";
 import { generateToken, authToken } from "../utils/jsonwebtoken.js"
+import Swal from "sweetalert2";
 
 
 let userService = new userManagerMongo()
@@ -54,12 +55,15 @@ router.post('/login', async (req, res) => {
 
 
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res, next) => {
     req.session.destroy(err => {
         if (err) res.send({ status: 'logout error', error: err })
-        res.send('Haz cerrado sesion ')
+
+        res.send('sesion cerrada.')
+
     })
 })
+
 
 
 
@@ -95,5 +99,9 @@ router.get('/github', passport.authenticate('github', { scope: ['user:email'] })
 router.get('/githubcallback', passport.authenticate('github', { failureRedirect: '/login' }), async (req, res) => {
     req.session.user = req.user
     res.redirect('/')
+})
+
+router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.send(req.user)
 })
 export default router

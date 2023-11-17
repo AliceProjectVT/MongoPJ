@@ -1,8 +1,7 @@
 import { mongoose, connect } from "mongoose";
-import dotenv from 'dotenv'
+import dotenv from "dotenv"
 
 dotenv.config()
-
 
 const configObject = {
     port: process.env.PORT,
@@ -14,7 +13,7 @@ console.log(configObject)
 const conectDB = async () => {
     try {
         console.log('Conectado a Mongo en la nube')
-        return await connect(process.env.MONGO_URL);
+        return await connect('mongodb+srv://islamartinezd:estoesunaclavesegura@nubecita.m8fbcsp.mongodb.net/?retryWrites=true&w=majority')
     } catch (error) {
 
         console.log(`Error al conectar: ${error}`);

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import CartManager from "../controllers/CartManager.js";
+import CartManager from "../Daos/Mongo/cartManager.js";
 
 const CartRouter = Router()
 const carts = new CartManager
@@ -7,17 +7,17 @@ const carts = new CartManager
 
 
 
-CartRouter.post("/", async (req,res) => {
+CartRouter.post("/", async (req, res) => {
     res.send(await carts.addCarts())
 })
 
-CartRouter.get("/", async(req,res)=>{
+CartRouter.get("/", async (req, res) => {
     res.send(await carts.readCarts())
 })
-CartRouter.get("/:id", async(req,res)=>{
+CartRouter.get("/:id", async (req, res) => {
     res.send(await carts.getCartsByID(req.params.id))
 })
-CartRouter.post("/:cid/products/:pid", async(req,res)=>{
+CartRouter.post("/:cid/products/:pid", async (req, res) => {
 
     let cartID = req.params.cid
     let productID = req.params.pid

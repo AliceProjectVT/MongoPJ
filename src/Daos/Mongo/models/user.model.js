@@ -23,14 +23,14 @@ const userSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true
     },
     password: String,
     role: {
         type: String,
         enum: ['user', 'user_premium', 'admin'],
         default: 'user'
-    }
+    },
+    cartId: { type: mongoose.SchemaTypes.ObjectId, ref: "carts" },
 
 })
 // userSchema.pre('save', async function (next) {

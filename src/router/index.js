@@ -12,11 +12,12 @@ import MongoStore from "connect-mongo";
 import sessionRouter from "./sessions.routes.js"
 import userProfile from "./profile.routes.js"
 
-import initializePassport from "../config/passport.config.js";
+import {initializePassport, initPassportGit} from "../config/passport.config.js";
 import passport from "passport";
 
 
 initializePassport()
+initPassportGit()
 
 const router = Router()
 let userService = new userManagerMongo()

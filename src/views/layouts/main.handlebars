@@ -13,7 +13,7 @@
         <li><a href="/">Home</a></li>
         {{!-- <li><a href="/chat">Chat</a></li> --}}
       {{#if isLoggedIn}}
-      <li><a href="/logout">logout</a></li>
+      <li><a href="/api/sessions/logout">logout</a></li>
       <li><a href="/users">users</a></li>
         
       {{else}}
@@ -21,7 +21,7 @@
         <li><a href="/login">Login</a></li>  
         
       {{/if}}
-       
+        
     </ul>
 </nav>
 
@@ -30,9 +30,8 @@
 
     <script src="/socket.io/socket.io.js"></script>
 
-    {{!Alert para dar nombre en el chat con websocket   }}
-   {{!-- <script src=" https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js "></script> --}}
-
+ 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="/js/index.js"></script>
 </body>
 </html>

@@ -31,6 +31,8 @@ router.get("/login", async (req, res) => {
     res.render('login')
 
 })
+
+
 router.get("/users", [
     passportCall('jwt'),
     authorization(['ADMIN'])

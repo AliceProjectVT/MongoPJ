@@ -18,7 +18,7 @@
         </div>
 </div>
 <div class="section" >
-    <div class="button"><input type="submit" value="Login"></div>
+    <div class="button"><input type="submit" name="submit" value="Login"></div>
     <div class="button"><a href="/register">Registrarse</a></div>
 </div>
 </form>
@@ -28,30 +28,6 @@
 
 
 
-<script>
-  const form = document.querySelector('#registerForm')
-form.addEventListener('submit', event => {
-    event.preventDefault()
-    const formData = new FormData(form)
-    const data = Object.fromEntries(formData)
-    console.log(data) 
-    fetch('api/sessions/login', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-            
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            console.log(data)
-            window.location.href = '/'
-        }
-    })
-    .catch(error => {
-        console.log(error.message)
-    })
-})
+<script type="module" src="/js/login.js"></script>
+
 </script>

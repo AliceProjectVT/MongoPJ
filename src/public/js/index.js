@@ -2,22 +2,22 @@ const socket = io()
 const userName = document.querySelector('.userName')
 let nameUser = ""
 
-Swal.fire({
-    title: 'Ingresa tu Nick',
-    input: 'text',
-    inputAttributes: {
-        autocapitalize: 'on'
-    },
-    showCancelButton: false,
-    confirmButtonText: 'Ingresar.',
+// Swal.fire({
+//     title: 'Ingresa tu Nick',
+//     input: 'text',
+//     inputAttributes: {
+//         autocapitalize: 'on'
+//     },
+//     showCancelButton: false,
+//     confirmButtonText: 'Ingresar.',
 
-}).then((result) => {
-    userName.textContent = result.value
-    nameUser = result.value
-    socket.emit("userConnection", {
-        user: result.value
-    })
-})
+// }).then((result) => {
+//     userName.textContent = result.value
+//     nameUser = result.value
+//     socket.emit("userConnection", {
+//         user: result.value
+//     })
+// })
 const messageInnerHTML = (data) => {
     let message = "";
     for (let i = 0; i < data.length; i++) {

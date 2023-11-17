@@ -29,25 +29,25 @@ router.get('/session', (req, res) => {
     }
 
 })
-router.post('/login', (req, res) => {
-    const { email, password } = req.body
-    if (email != 'd@i.com' || password != '123456') {
-        return res.send('login fallido')
-    }
-    req.session.user = email
-    req.session.admin = true
-    res.send
-    return res.send('Exito al logear')
+// router.post('/login', (req, res) => {
+//     const { email, password } = req.body
+//     if (email != 'd@i.com' || password != '123456') {
+//         return res.send('login fallido')
+//     }
+//     req.session.user = email
+//     req.session.admin = true
+//     res.send
+//     return res.send('Exito al logear')
 
-})
+// })
 
-router.get('/logout', (req, res) => {
-    req.session.destroy(err => {
-        if (err) return res.send({ status: 'logout error', error: err });
+// router.get('/logout', (req, res) => {
+//     req.session.destroy(err => {
+//         if (err) return res.send({ status: 'logout error', error: err });
        
-        res.redirect('/')
-    });
-});
+//         res.redirect('/')
+//     });
+// });
 
 
 
