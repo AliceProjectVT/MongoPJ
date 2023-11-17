@@ -11,10 +11,16 @@
 <nav>
     <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/chat">Chat</a></li>
-        <li><a href="/register">Register</a></li>
-        <li><a href="/login">Login</a></li>
+        {{!-- <li><a href="/chat">Chat</a></li> --}}
+      {{#if isLoggedIn}}
+      <li><a href="/logout">logout</a></li>
+      <li><a href="/users">users</a></li>
         
+      {{else}}
+       <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>  
+        
+      {{/if}}
        
     </ul>
 </nav>

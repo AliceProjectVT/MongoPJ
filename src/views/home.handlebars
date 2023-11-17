@@ -1,6 +1,8 @@
 <p>Home Page.</p>
-{{#if username}}
-  <p>Hola, {{username}}. Bienvenido de nuevo.</p>
+{{#if isLoggedIn}}
+  <h1>Bienvenido, {{nameUser}} !!</h1>
+    
 {{else}}
-  <p>Bienvenido a nuestra aplicación. Por favor, inicia sesión.</p>
+<h1>Puedes iniciar sesión o Registrarte.</h1>
+    
 {{/if}}

@@ -19,9 +19,13 @@ router.get('/register', (req, res) => {
 
 router.get("/", async (req, res) => {
 
-    res.render('home', { isLoggedIn: req.session.user ? true : false });
-
+    res.render('home', {
+        isLoggedIn: req.session.user ? true : false
+        , nameUser: req.session.user ? req.session.user.name : ''
+    });
 })
+
+
 router.get("/login", async (req, res) => {
 
     res.render('login')

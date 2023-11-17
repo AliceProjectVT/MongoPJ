@@ -12,7 +12,7 @@ import passport from "passport";
 conectDB()
 const app = express()
 
-const PORT = 4000 // Define PORT here
+const PORT = process.env.PORT 
 
 const httpServer = app.listen(PORT, () => {
     console.log(`Servidor Arriba Puerto ${PORT}`)
