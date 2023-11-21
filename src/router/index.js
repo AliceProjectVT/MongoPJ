@@ -12,7 +12,7 @@ import MongoStore from "connect-mongo";
 import sessionRouter from "./sessions.routes.js"
 import userProfile from "./profile.routes.js"
 
-import {initializePassport, initPassportGit} from "../config/passport.config.js";
+import { initializePassport, initPassportGit } from "../config/passport.config.js";
 import passport from "passport";
 
 
@@ -28,7 +28,7 @@ router.use(passport.initialize())
 router.use(cookieParser('F1RM4S3GUR4'))
 router.use(session({
     store: MongoStore.create({
-        mongoUrl: 'mongodb+srv://islamartinezd:estoesunaclavesegura@nubecita.m8fbcsp.mongodb.net/?retryWrites=true&w=majority',
+        mongoUrl: 'mongodb://127.0.0.1:27017/ecommerce',
         mongoOptions: {
             useNewUrlParser: true,
             useUnifiedTopology: true,
